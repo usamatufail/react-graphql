@@ -13,10 +13,12 @@ const {
 const books = [
   { name: 'Bang e Dara', genre: 'Poetry', id: '1' },
   { name: 'Zarb e Kaleem', genre: 'Poetry', id: '2' },
+  { name: 'Anna Karenina', genre: 'Drama', id: '3' },
 ]
 
 const authors = [
-  { name: 'Allama Muhammad Iqbal', age: 66, id: '1' }
+  { name: 'Allama Muhammad Iqbal', age: 66, id: '1' },
+  { name: 'Leo Tolstoy', age: 66, id: '2' }
 ];
 
 const BookType = new GraphQLObjectType({
