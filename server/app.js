@@ -1,6 +1,10 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('./schema/schema');
+const connectDB = require('./database/db');
+
+// Connect with mongodb instance in atlas
+connectDB();
 
 const app = express();
 
