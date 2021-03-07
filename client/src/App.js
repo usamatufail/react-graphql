@@ -1,6 +1,6 @@
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import { BookList } from './components';
+import { AddBook, BookList } from './components';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5500/graphql'
@@ -12,6 +12,7 @@ function App() {
       <div id="main">
         <h1>Sam's Reading List</h1>
         <BookList />
+        <AddBook />
       </div>
     </ApolloProvider>
   );
