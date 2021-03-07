@@ -11,11 +11,15 @@ const getBooksQuery = gql`
 `;
 
 const Books = (props) => {
-  console.log(props);
+  const {
+    data: { books },
+  } = props;
   return (
     <div>
       <ul id="book-list">
-        <li>Book Name</li>
+        {books?.map((book) => (
+          <li key={book.id}>{book.name}</li>
+        ))}
       </ul>
     </div>
   );
