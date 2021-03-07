@@ -10,7 +10,8 @@ const getAuthorsQuery = gql`
   }
 `;
 
-const AddBookForm = () => {
+const AddBookForm = ({ data: { authors, loading } }) => {
+  console.log(authors);
   return (
     <form id="add-book">
       <div className="field">
@@ -26,7 +27,17 @@ const AddBookForm = () => {
       <div className="field">
         <label htmlFor="author">Author:</label>
         <select id="author" name="genre">
-          <option>Select author</option>
+          {loading ? (
+            <option>Loading authors...</option>
+          ) : (
+            authors?.map(({ id, name }) => {
+              return (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              );
+            })
+          )}
         </select>
       </div>
 
