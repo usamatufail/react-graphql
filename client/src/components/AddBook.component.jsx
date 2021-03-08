@@ -1,23 +1,49 @@
+import { useState } from 'react';
 import { graphql } from 'react-apollo';
-import { getAuthorsQuery } from '../queries';
+import { flowRight as compose } from 'lodash';
+import { addBookMutation, getAuthorsQuery } from '../queries';
 
-const AddBookForm = ({ data: { authors, loading } }) => {
-  console.log(authors);
+const AddBookForm = ({
+  addBookMutation,
+  getAuthorsQuery: { loading, authors },
+}) => {
+  const [variables, setData] = useState({
+    name: '',
+    genre: '',
+    authorId: '',
+  });
+
+  const handleChange = (e) => {
+    setData({ ...variables, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await addBookMutation({
+      variables: {
+        name: variables.name,
+        genre: variables.genre,
+        authorId: variables.authorId,
+      },
+    });
+  };
+
   return (
-    <form id="add-book">
+    <form id="add-book" onSubmit={handleSubmit}>
       <div className="field">
         <label htmlFor="name">Book Name:</label>
-        <input type="text" name="name" id="name" />
+        <input type="text" name="name" id="name" onChange={handleChange} />
       </div>
 
       <div className="field">
         <label htmlFor="genre">Genre:</label>
-        <input type="text" name="genre" id="genre" />
+        <input type="text" name="genre" id="genre" onChange={handleChange} />
       </div>
 
       <div className="field">
-        <label htmlFor="author">Author:</label>
-        <select id="author" name="genre">
+        <label htmlFor="authorId">Author:</label>
+        <select id="authorId" name="authorId" onChange={handleChange}>
           {loading ? (
             <option>Loading authors...</option>
           ) : (
@@ -37,4 +63,7 @@ const AddBookForm = ({ data: { authors, loading } }) => {
   );
 };
 
-export const AddBook = graphql(getAuthorsQuery)(AddBookForm);
+export const AddBook = compose(
+  graphql(getAuthorsQuery, { name: 'getAuthorsQuery' }),
+  graphql(addBookMutation, { name: 'addBookMutation' })
+)(AddBookForm);
