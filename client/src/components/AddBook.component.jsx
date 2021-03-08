@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { graphql } from 'react-apollo';
 import { flowRight as compose } from 'lodash';
-import { addBookMutation, getAuthorsQuery } from '../queries';
+import { getAuthorsQuery, getBooksQuery, addBookMutation } from '../queries';
 
 const AddBookForm = ({
   addBookMutation,
@@ -26,6 +26,7 @@ const AddBookForm = ({
         genre: variables.genre,
         authorId: variables.authorId,
       },
+      refetchQueries: [{ query: getBooksQuery }],
     });
   };
 
